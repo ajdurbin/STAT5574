@@ -1,0 +1,15 @@
+---
+title: "STAT5574 Report"
+author: 
+  - name: Alexander Durbin
+    affiliation: Virginia Tech
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+geometry: margin = 1in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Test
