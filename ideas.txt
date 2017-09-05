@@ -1,0 +1,11 @@
+Summit Consulting with brief history and their types of clients
+Problem I dealt with, ie, the appraisal inflation
+My role in this problem, ie, the AVM team
+Robust regression, bootstrap, and cross-validation using kfold means
+Methodology working group, writing and machine learning sections
+Deep dive team
+Spatial regression
+culture
+what i liked
+what i did not like
+reflection on what i learned or took from the experience
