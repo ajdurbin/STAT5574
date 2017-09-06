@@ -5,13 +5,14 @@ date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: pdf_document
 geometry: margin = 1in
 fontsize: 12pt
+abstract: "This paper is the capstone requirement for STAT5574 and documents my experience as an intern at Summit Consulting. It includes history and background of the company, my role and daily responsibilites, as well as the statistcal knowledge I've gained from this experience."
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Summit Consulting Introduction
+# Summit Consulting
 
 Summit Consulting is a statistical consulting firm founded in 2003 by Dr. Albert Lee. Dr. Lee's specializations in sampling techniques and econometric modeling prepared him for pursuing a career as a senior consultant at Bates White. As senior consultant, Dr. Lee was a critical component in Bates White's largest cases, the vitamin antitrust litigation and W.R. Grace asbestos litigation. After being exposed to litigation, Dr. Lee began broadened his focus from consulting statistician to also statistical expert witness. Located in Washington, D.C., Dr. Lee believed that his background in economics, sampling techniques, and litigation preparation would best serve governmental clients. Thus, being in walking distance the Department of Labor, Federal Housing Financing Agency, and other governmental agencies has been a priority since.
 
@@ -27,4 +28,10 @@ This abundance in litigation work has thus been a core focus of Summit with the 
 
 In between trials, Dr. Lee and Mr. Curcio have sought to further grow Summit's client base while still adhearing to its core focuses. Summit has expanded to multiple departments with different expertise. In addition to the litigation directorate, other departments include federal credit modeling and forecasting and applied statistics and economics. These groups adhere not only to Summit's vision but most importantly to its founding principals' education and professional experiences. Summit has also partnered with multiple academic institutions to cultivate a working group of associate subject matter experts in addition to opportunities to become expert witnesses. The average employee at Summit holds an advanced degree in statistics, economics, or accounting. Summit promotes continuous learning and provides a yearly education budget for each employee for further education or certification and regularly hosts employee training in sampling methodologies, statistical software packages, and machine learning. 
 
-# Litigation Analyst, MWG, Deep Dive, AVM Team
+# Litigation
+
+Summit's Litigation directorate is decomposed into several working teams, research and review, quality control, and AVM. Each team has separate responsibilites, but do overlap some during trial periods. Research and Review have the primary goal to prepare Dr. Lee as a statistical expert witness. They are responsible for assisting Dr. Lee in trial preparation, including mock depositions, export reports, and rebuttle reports. The quality control team focuses on both quality of statistical analyses and quality of code. They provide all statistical figures and tables in expert reports. Summit is required to submit all code to the opposition during trial. QC is prioritized with ensuring that all code used to construct figures, statisitcs, and tables is exact and well documented, including log files, file paths, and any function declarations. They serve an important purpose at Summit, any code that is not exact is almost certainly used in the opposition's arguments and reports. The AVM team is the smallest team in Litigation at Summit. They entirely consist of statistians with advanced programming experience and expertise. Their main purpose is running the Automated Valuation Model derived by Dr. Lee. Other responsibilities of the AVM team include cross-validation, ad-hoc analyses, data cleaning, and the maintenance of Summit's Amazon Web Services infrastructure. While I was recruited as a member of the AVM team, I had several opportunities and responsibilities to work with both the R&R and QC teams.
+
+My initial responsiblities as a member of the AVM team were learning the AWS infrastructure. The AVM team uses custom Amazon Machine Images that automatically load the datasets from S3 storage and code from CodeCommit. These images had RStudio Server and all relevant packages for the AVM installed. Since AWS is HIPAA complient, Summit is allowed to store data from Quinn Emanuel and other government clients on AWS and save more money than using onsite data storage and backup. Another benefit is the ability to specify the hardware requirements of your image. Jobs that take hours or days running on your laptop can take minutes when using more powerful hardware on AWS, and you are only charged for the computational time the job takes. This ability to upscale hardware requirements was most useful during trial rebuttle periods where running analyses as quickly as possible is necessary.
+
+# MWG, Deep Dives
