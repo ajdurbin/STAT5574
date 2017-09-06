@@ -5,7 +5,7 @@ date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: pdf_document
 geometry: margin = 1in
 fontsize: 12pt
-abstract: "This paper is the capstone requirement for STAT5574 and documents my experience as an intern at Summit Consulting. It includes history and background of the company, my role and daily responsibilites, as well as the statistcal knowledge I've gained from this experience."
+abstract: "This paper is the capstone requirement for STAT5574 and documents my experience as an intern at Summit Consulting. It includes history and background of the company, my role and daily responsibilites, as well as the statistcal and technical knowledge I've gained from this experience. The reader recognizes that a non-disclosure agreement was required for this internship."
 ---
 
 ```{r setup, include=FALSE}
@@ -49,6 +49,14 @@ For each subject
     Fit model
 Cross-validate
 ```
-The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from the mean to median,   
+The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from mean to median-based calculations, bootstrapping, or verbose output.
 
-# MWG, Deep Dives
+As a member of the AVM team, I was required to understand the AVM completely, both for debugging purposes and in case an AVM team member was questioned during a deposition. While Dr. Lee had derived the statistical theory for the model, the AVM team were the ones responsible for its implimentation in `R` and need to be prepared in case they are required to appear in court. I took this opportunity and started a long-term project of internally documenting the AVM for Summit. I used Summit's custom `CSS` theme, `R Markdown`, and \LaTeX \ elements to create professional documentation. This documentation totalled over 90 pages and was as extensive as possible. It included a flow chart made with `TikZ` to best visualize the path a subject takes through the AVM with what information is added or removed from it after each function call. Also included are hardware requirements, uploading new subject and comparable data to AWS, nested function structure, comparison of log files, debugging procedures, and complete function descriptions with object types and return values. I was able to learn the AVM through the writing process and debugging. 
+
+The average AVM workflow consisted of an often-failed first attempt of running new subject and comparable data and then reading log files to find the formatting bug. After the successful initial run, we change the comparable data and re-run the model. Results between these fits is often consistent. We then begin stress-testing with runs using the median, 1% and 10% exact confidence intervals, bootstrap confidence intervals using 100, 500, and 1000 samples, and *kfold* cross-validation. We then store this data on `S3` and alert another team member for peer replication. If repliciation results are different, we compare log files to ensure equivalent settings in each run. If the replication results are the same we alert the quality control group to begin constructing summary statistics for the expert reports. 
+
+Robust regression with MM estimation?
+
+# Methodology Working Group
+
+To further improve the litigation directorate's core competencies, Summit's Methodology Working Group meets weekly to discuss statistical techniques and methods that can be of benefit or harm to the opposition. MWG has monthly topcis of focus with meekly meetings. Each month begins with an introductory presentation of the topic by the group leader. Those with background in the particular topic then give five minute presentations on their experience, knowledge of pros and cons, and how Summit can utilize this technique. After resources such as packages, literature, or tutorials are discussed, each member of MWG is tasked with finding a possible project or solution that the topic may be applied to. The next two weeks consist of group presentations discussing the problem, solution, and results. The final monthly meeting is a Summit-wide presentation with the most successful solutions. MWG is also responsible for the Lit Throwdown competition. Litigation is split into two teams, plaintiff and defense, and is    
