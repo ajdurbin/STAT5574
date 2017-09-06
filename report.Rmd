@@ -1,15 +1,22 @@
 ---
 title: "STAT5574 Report"
-author: 
-  - name: Alexander Durbin
-    affiliation: Virginia Tech
+author: "Alexander Durbin"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: html_document
+output: pdf_document
 geometry: margin = 1in
+fontsize: 12pt
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Test
+# Summit Consulting Introduction
+
+Summit Consulting is a statistical consulting firm founded in 2003 by Dr. Albert Lee. Dr. Lee's specializations in sampling techniques and econometric modeling prepared him for pursuing a career as a senior consultant at Bates White. As senior consultant, Dr. Lee was a critical component in Bates White's largest cases, the vitamin antitrust litigation and W.R. Grace asbestos litigation. After being exposed to litigation, Dr. Lee began broadened his focus from consulting statistician to also statistical expert witness. Located in Washington, D.C., Dr. Lee believed that his background in economics, sampling techniques, and litigation preparation would best serve governmental clients. Thus, being in walking distance the Department of Labor, Federal Housing Financing Agency, and other governmental agencies has been a priority since.
+
+One of Summit's first clients was the Office of Management and Budget. Here Dr. Lee assisted then-credit policy analyst Anthony Curcio on credit subsidy model development. Working closely toegther, Dr. Lee identified Mr. Curcio's experience in needing to outsource statistical work, coupled with his background in federal credit modeling and advanced knowledge of federal budgets as an asset and possible ally of Summit Consulting. Dr. Lee gained a wealth of knowledge from Mr. Curcio on further opportunities for government contracts, other consulting opportunities, and preparing to be an expert witness. Their mutual interests in economics and consulting work formed a powerful working relationship; Mr. Curcio joined Summit Consulting as its second employee, additional founding member, and second principal in 2003.
+
+Hereafter, Dr. Lee led a small team of economists and statisticians working on short-term government consulting contracts sourced by Mr. Curcio. However, Dr. Lee sought additional consistent long-term projects. He cultivated his client relationships with the Department of Labor and was able to source a long-term contract with the agency. They have been Summit's longest client and are often prioritized. Additionally, Summit established a group of employees that work on-site fulltime. This team primarily works onsite with regular offfice hours to always be available to the Department of Labor.  
+
+While Summit was consistently growing and maintaininig its focus as a governmental contractor, Dr. Lee was not satisfied with the lack of opportunities as a statistical expert witness. These opportunities presented themselves during the United States Housing Bubble burst in 2006. Summit consulting was then hired, as well as Freddie Mac and CoreLogic, to construct Automated Valuation Models with the goal of possibly pursuing legal action against financial institutions that provided the majority of residential loans and residential home appraisals. Dr. Lee then researched how to idenfiy predatory residential mortgage backed securities. These predatory loans were quantified as those with significant appraisal inflation. Dr. Lee's then worked with other economic experts to derive a regression model to predict appraisal inflation.
