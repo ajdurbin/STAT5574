@@ -32,6 +32,23 @@ In between trials, Dr. Lee and Mr. Curcio have sought to further grow Summit's c
 
 Summit's Litigation directorate is decomposed into several working teams, research and review, quality control, and AVM. Each team has separate responsibilites, but do overlap some during trial periods. Research and Review have the primary goal to prepare Dr. Lee as a statistical expert witness. They are responsible for assisting Dr. Lee in trial preparation, including mock depositions, export reports, and rebuttle reports. The quality control team focuses on both quality of statistical analyses and quality of code. They provide all statistical figures and tables in expert reports. Summit is required to submit all code to the opposition during trial. QC is prioritized with ensuring that all code used to construct figures, statisitcs, and tables is exact and well documented, including log files, file paths, and any function declarations. They serve an important purpose at Summit, any code that is not exact is almost certainly used in the opposition's arguments and reports. The AVM team is the smallest team in Litigation at Summit. They entirely consist of statistians with advanced programming experience and expertise. Their main purpose is running the Automated Valuation Model derived by Dr. Lee. Other responsibilities of the AVM team include cross-validation, ad-hoc analyses, data cleaning, and the maintenance of Summit's Amazon Web Services infrastructure. While I was recruited as a member of the AVM team, I had several opportunities and responsibilities to work with both the R&R and QC teams.
 
-My initial responsiblities as a member of the AVM team were learning the AWS infrastructure. The AVM team uses custom Amazon Machine Images that automatically load the datasets from S3 storage and code from CodeCommit. These images had RStudio Server and all relevant packages for the AVM installed. Since AWS is HIPAA complient, Summit is allowed to store data from Quinn Emanuel and other government clients on AWS and save more money than using onsite data storage and backup. Another benefit is the ability to specify the hardware requirements of your image. Jobs that take hours or days running on your laptop can take minutes when using more powerful hardware on AWS, and you are only charged for the computational time the job takes. This ability to upscale hardware requirements was most useful during trial rebuttle periods where running analyses as quickly as possible is necessary.
+My initial responsiblities as a member of the AVM team were learning the AWS infrastructure. The AVM team uses custom Amazon Machine Images that automatically load the datasets from S3 storage and code from CodeCommit. These images have RStudio Server and all relevant packages for the AVM installed. Since AWS is HIPAA complient, Summit is allowed to store data from Quinn Emanuel and other government clients on S3 and save more money than using onsite data storage and backup. Another benefit is the ability to specify the hardware requirements of your image. Jobs that take hours or days running on your laptop can take minutes when using more powerful hardware on AWS, and you are only charged for the computational time the job takes. This ability to upscale hardware requirements was most useful during trial rebuttle periods where running analyses as quickly as possible is necessary. A supplementary requirement for AWS was learning version control with `Git`. When updating the AVM code or other scripts, CodeCommit provides a central location to put all source code files, complete with documentation on all changes and the ability to restore previous versions of scripts if necessary. I felt that AWS provided a homogenous computing environment necessary for statistical collaboriation. 
+
+After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure that can be summarized as follows:
+
+```{r, eval = FALSE}
+Load subjects
+Clean subjects 
+Apply conversion dictionary to column names
+Sort by feature
+For each subject
+  Find comparables 
+  if insufficient comparables
+    remove subject
+  else 
+    Fit model
+Cross-validate
+  
+```
 
 # MWG, Deep Dives
