@@ -34,7 +34,7 @@ Summit's Litigation directorate is decomposed into several working teams, resear
 
 My initial responsiblities as a member of the AVM team were learning the AWS infrastructure. The AVM team uses custom Amazon Machine Images that automatically load the datasets from S3 storage and code from CodeCommit. These images have RStudio Server and all relevant packages for the AVM installed. Since AWS is HIPAA complient, Summit is allowed to store data from Quinn Emanuel and other government clients on S3 and save more money than using onsite data storage and backup. Another benefit is the ability to specify the hardware requirements of your image. Jobs that take hours or days running on your laptop can take minutes when using more powerful hardware on AWS, and you are only charged for the computational time the job takes. This ability to upscale hardware requirements was most useful during trial rebuttle periods where running analyses as quickly as possible is necessary. A supplementary requirement for AWS was learning version control with `Git`. When updating the AVM code or other scripts, CodeCommit provides a central location to put all source code files, complete with documentation on all changes and the ability to restore previous versions of scripts if necessary. I felt that AWS provided a homogenous computing environment necessary for statistical collaboriation. 
 
-After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure that can be summarized as follows:
+After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure, split across multiple files, used `S4` objects, and required the use of many packages I was unfamiliar with. It can be summarized as follows:
 
 ```{r, eval = FALSE}
 Load subjects
@@ -48,7 +48,7 @@ For each subject
   else 
     Fit model
 Cross-validate
-  
 ```
+The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from the mean to median,   
 
 # MWG, Deep Dives
