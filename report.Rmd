@@ -40,7 +40,7 @@ My initial responsiblities as a member of the AVM team were learning the AWS inf
 
 After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure, split across multiple files, used `S4` objects, and required the use of many packages I was unfamiliar with. It can be summarized as follows:
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, fig.align="center"}
 1 Load subjects
 2 Clean subjects 
 3 Apply conversion dictionary
@@ -72,13 +72,45 @@ MWG is also responsible for the Lit Throwdown competition. Litigation is split i
 
 Another group I participated in as an intern was Summit's Deep Dive group. Similar to the AVM team, the Deep Dive team was responsible for ad-hoc analyses during trial periods. We needed to be prepared to complete any analyses as quickly as possible. Such problems were unique to each case requested by the opposition or Dr. Lee. The opposition's arguments usually were accompanied by a random sample of subject data and the majority of our solutions involed extrapolation of the data and comparison to our overall results. 
 
-This was my first experience with sampling statistics and an introduction to the `survey` package in `R`. We predominately used the regression and logistic regression models built in. An example is the following: DATA AND REG
+This was my first experience with sampling statistics and an introduction to the `survey` package in `R`. We predominately used the regression and logistic regression model functions built in. An example is the following: DATA AND REG
 
 An intersting problem we were unable to derive confident solution for was an adverse sampling problem. We were given two equally sized samples, extrapolated them, and were provided an additional sample. However, this sample had observation in one of original samples only. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
 
-```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3, fig.align='center'}
+```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center'}
   p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('Sample 1', 'Sample 2', 'Sample 3'), fill = c("blue", "red", "green"))
 ```
+
+<!-- dat <- -->
+<!--   read.table( text = -->
+<!--                 "id str clu wt a b c d e -->
+<!-- 		1 1 1 4 4213 2867 28618 -24014 .25 -->
+<!-- 		2 1 4 4 706 2867 4896 -2029 .25 -->
+<!-- 		3 1 5 4 712 2867 3730 -863 .25 -->
+<!-- 		4 1 15 4 124 2867 556 2311 .25 -->
+<!-- 		5 1 18 4 178 2867 1463 1404 .25 -->
+<!-- 		6 1 26 4 313 2867 1946 921 .25 -->
+<!-- 		7 1 30 4 172 2867 834 2033 .25 -->
+<!-- 		8 1 31 4 291 2867 932 1935 .25 -->
+<!--     9 1 38 4 651 2867 1147 1720 .25 -->
+<!--     10 1 47 4 1206 2857 3089 -222 .25", -->
+<!--     header = TRUE -->
+<!--   ) -->
+
+<!-- dat$fpc <- 32 -->
+
+<!-- my_design <- -->
+<!--   svydesign( -->
+<!--     id = ~clu, -->
+<!--     strata = ~str, -->
+<!--     data = dat, -->
+<!--     weights = ~wt, -->
+<!--     fpc = ~fpc -->
+<!--   ) -->
+<!-- my_glm <- svyglm(a ~ c, my_design) -->
+<!-- summary(my_glm) -->
+
+<!-- pred.df <- data.frame(c = sum(dat$wt) * 2867) -->
+<!-- predict(my_glm, newdata = pred.df, total = sum(dat$wt)) -->
 
 <!-- # Robust Regression -->
 
