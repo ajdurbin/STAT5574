@@ -12,6 +12,10 @@ abstract: "This paper is the capstone requirement for STAT5574 and documents my 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, include = FALSE}
+library(VennDiagram)
+
+```
 # Summit Consulting
 
 Summit Consulting is a statistical consulting firm founded in 2003 by Dr. Albert Lee. Dr. Lee's specializations in sampling techniques and econometric modeling prepared him for pursuing a career as a senior consultant at Bates White. As senior consultant, Dr. Lee was a critical component in Bates White's largest cases, the vitamin antitrust litigation and W.R. Grace asbestos litigation. After being exposed to litigation, Dr. Lee began broadened his focus from consulting statistician to also statistical expert witness. Located in Washington, D.C., Dr. Lee believed that his background in economics, sampling techniques, and litigation preparation would best serve governmental clients. Thus, being in walking distance the Department of Labor, Federal Housing Financing Agency, and other governmental agencies has been a priority since.
@@ -37,17 +41,17 @@ My initial responsiblities as a member of the AVM team were learning the AWS inf
 After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure, split across multiple files, used `S4` objects, and required the use of many packages I was unfamiliar with. It can be summarized as follows:
 
 ```{r, eval = FALSE}
-Load subjects
-Clean subjects 
-Apply conversion dictionary to column names
-Sort by feature
-For each subject
-  Find comparables 
-  if insufficient comparables
-    remove subject
-  else 
-    Fit model
-Cross-validate
+1 Load subjects
+2 Clean subjects 
+3 Apply conversion dictionary
+4 Sort by feature
+5 For each subject
+    Find comparables 
+    if Insufficient comparables
+     Remove subject
+    else 
+     Fit model
+6 Cross-validate
 ```
 The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from mean to median-based calculations, bootstrapping, or verbose output.
 
@@ -64,4 +68,32 @@ To further improve the litigation directorate's core competencies, Summit's Meth
 MWG is also responsible for the Lit Throwdown competition. Litigation is split into two teams, plaintiff and defense, with the goal of reenacting a trial. Each team is further split into R&R, QC, and AVM, where it's required that each participant is not a member of their usual team. The teams are given a sample data set with the plaintiff's argument. It is then their responsibility to proivide expert service to their 'client', not only in statistical analyses, but also in legal recourse. The competition takes place over two weeks, with expert report due dates, rebuttle reports, and a mock trial with each group's expert witness and judged by Dr. Lee.
 
 
-# Deep Dives
+# Deep Dives (survey package, and the adverse sample)
+
+Another group I participated in as an intern was Summit's Deep Dive group. Similar to the AVM team, the Deep Dive team was responsible for ad-hoc analyses during trial periods. We needed to be prepared to complete any analyses as quickly as possible. Such problems were unique to each case requested by the opposition or Dr. Lee. The opposition's arguments usually were accompanied by a random sample of subject data and the majority of our solutions involed extrapolation of the data and comparison to our overall results. 
+
+This was my first experience with sampling statistics and an introduction to the `survey` package in `R`. We predominately used the regression and logistic regression models built in. An example is the following: DATA AND REG
+
+An intersting problem we were unable to derive confident solution for was an adverse sampling problem. We were given two equally sized samples, extrapolated them, and were provided an additional sample. However, this sample had observation in one of original samples only. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
+
+```{r eval = TRUE, echo = FALSE}
+  p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('Sample 1', 'Sample 2', 'Sample 3'), fill = c("blue", "red", "green"))
+```
+
+```{r, fig.width=2.5, fig.height=4, echo = FALSE}
+  grid.draw(p)
+```
+
+<!-- # Robust Regression -->
+
+<!-- # Spatial Lag Regression -->
+
+<!-- # Boosted Trees -->
+
+<!-- # kfold Cross Validation -->
+
+<!-- # Technical Skills -->
+
+<!-- # Company Culture -->
+
+<!-- # Overall Experience -->
