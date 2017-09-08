@@ -76,12 +76,8 @@ This was my first experience with sampling statistics and an introduction to the
 
 An intersting problem we were unable to derive confident solution for was an adverse sampling problem. We were given two equally sized samples, extrapolated them, and were provided an additional sample. However, this sample had observation in one of original samples only. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
 
-```{r eval = TRUE, echo = FALSE}
+```{r eval = TRUE, echo = FALSE, fig.width=5, fig.height=3, fig.align='center'}
   p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('Sample 1', 'Sample 2', 'Sample 3'), fill = c("blue", "red", "green"))
-```
-
-```{r, fig.width=2.5, fig.height=4, echo = FALSE}
-  grid.draw(p)
 ```
 
 <!-- # Robust Regression -->
