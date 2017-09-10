@@ -45,19 +45,21 @@ My initial responsiblities as a member of the AVM team were learning the AWS inf
 
 After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure, split across multiple files, used `S4` objects, and required the use of many packages I was unfamiliar with. It can be summarized as follows:
 
-```{r, eval = FALSE}
-1 Load subjects
-2 Clean subjects 
-3 Apply conversion dictionary
-4 Sort by feature
-5 For each subject
-    Find comparables 
-    if Insufficient comparables
-     Remove subject
-    else 
-     Fit model
-6 Cross-validate
-```
+\begin{enumerate}
+\item Load subjects
+\item Clean subjects
+\item Apply conversion dictionary
+\item Sort by feature
+\item For each subject
+\begin{enumerate}
+\item Find comparables
+\item If insufficient comparables remove subject, else fit model
+\end{enumerate}
+\item Cross-validate
+\end{enumerate}
+
+\newpage
+
 The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from mean to median-based calculations, bootstrapping, or verbose output.
 
 As a member of the AVM team, I was required to understand the AVM completely, both for debugging purposes and in case an AVM team member was questioned during a deposition. While Dr. Lee had derived the statistical theory for the model, the AVM team were the ones responsible for its implimentation in `R` and need to be prepared in case they are required to appear in court. I took this opportunity and started a long-term project of internally documenting the AVM for Summit. I used Summit's custom `CSS` theme, `R Markdown`, and \LaTeX \ elements to create professional documentation. This documentation totalled over 90 pages and was as extensive as possible. It included a flow chart made with `TikZ` to best visualize the path a subject takes through the AVM with what information is added or removed from it after each function call. Also included are hardware requirements, uploading new subject and comparable data to AWS, nested function structure, comparison of log files, debugging procedures, and complete function descriptions with object types and return values. I was able to learn the AVM through the writing process and debugging. 
@@ -174,9 +176,9 @@ Note that Tukey's Biweight only gives full weight to observations with zero resi
 
 x <- seq(0, 10, by = 0.1)
 e <- rnorm(length(x), 0, 1)
-y <- -1 * runif(1, -1, 1) + x + e
+y <- -1 * runif(1, -2, 2) + x + e
 raw <- data.frame(x = x, y = y)
-outlier <- data.frame(x = runif(5, 7, 12), y = runif(5, -2, 2))
+outlier <- data.frame(x = runif(5, 8, 12), y = runif(5, -2, 2))
 raw <- rbind.data.frame(raw, outlier)
 
 ggplot(data = raw) +
@@ -202,18 +204,18 @@ The robust regression procedure is summarized as follows:
 \item Calculate $\hat{\sigma}_{i} = 1.4286 \times MAD$
 \item Calculate $u_i = \frac{e_i}{\hat{\sigma}_i}$
 \item Calculate $w_i$ using $u_i$ according to Tukey or Huber
-\item Calculate $\hat{\beta}^b$ suing WLS with $w_i$
+\item Calculate $\hat{\beta}^b$ using WLS with $w_i$
 \item Repeat until convergence
 \end{enumerate}
 
-# Spatial Lag Regression
+<!-- # Spatial Lag Regression (need to use example data, fit reg, show moran's I, then fit lag model) -->
+
+# Spatial Regression
+
+At Summit I also had the opportunity to learn spatial statistics concepts and how to fit regression models with datasets that were spatially autocorrelated. Spatial autocorrelation was a very relevant problem in some of our cases and has been used against the opposition successfully. Spatial autocorrelation can be a serious issue and if not accounted for can have interesting side effects. For instance, if your data is spatially autocorrelated, fitting linear models can result in significant coefficient estimates that make little sense. We used the `spdep` package in `R` for its `moran`, `lagmess`, and `lagsarlm` functions.
 
 <!-- # Boosted Trees -->
 
-<!-- # kfold Cross Validation -->
-
 <!-- # Technical Skills -->
-
-<!-- # Company Culture -->
 
 <!-- # Overall Experience -->
