@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, include = FALSE}
 library(VennDiagram)
+library(survey)
 
 ```
 # Summit Consulting
@@ -68,51 +69,76 @@ To further improve the litigation directorate's core competencies, Summit's Meth
 MWG is also responsible for the Lit Throwdown competition. Litigation is split into two teams, plaintiff and defense, with the goal of reenacting a trial. Each team is further split into R&R, QC, and AVM, where it's required that each participant is not a member of their usual team. The teams are given a sample data set with the plaintiff's argument. It is then their responsibility to proivide expert service to their 'client', not only in statistical analyses, but also in legal recourse. The competition takes place over two weeks, with expert report due dates, rebuttle reports, and a mock trial with each group's expert witness and judged by Dr. Lee.
 
 
-# Deep Dives (survey package, and the adverse sample)
+# Deep Dives
 
-Another group I participated in as an intern was Summit's Deep Dive group. Similar to the AVM team, the Deep Dive team was responsible for ad-hoc analyses during trial periods. We needed to be prepared to complete any analyses as quickly as possible. Such problems were unique to each case requested by the opposition or Dr. Lee. The opposition's arguments usually were accompanied by a random sample of subject data and the majority of our solutions involed extrapolation of the data and comparison to our overall results. 
+Another group I participated in as an intern was Summit's Deep Dive group. Similar to the AVM team, the Deep Dive team was responsible for ad-hoc analyses during trial periods. We needed to be prepared to complete any analyses as quickly as possible. Such problems were unique to each case and requested by the opposition or Dr. Lee. The opposition's arguments usually were accompanied by a random sample of subject data and the majority of our solutions involed extrapolation of the data and comparison to our overall results. 
 
-This was my first experience with sampling statistics and an introduction to the `survey` package in `R`. We predominately used the regression and logistic regression model functions built in. An example is the following: DATA AND REG
+This was my first experience with sampling statistics and an introduction to the `survey` package in `R`. We predominately used the regression and logistic regression model functions built in. An example is the following:
 
-An intersting problem we were unable to derive confident solution for was an adverse sampling problem. We were given two equally sized samples, extrapolated them, and were provided an additional sample. However, this sample had observation in one of original samples only. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
+```{r, echo=FALSE}
 
-```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center'}
-  p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('Sample 1', 'Sample 2', 'Sample 3'), fill = c("blue", "red", "green"))
+dat <-
+  read.table( text =
+                "id str clu wt a b c d
+		1 1 1 4 258 6847 7266 -419
+		2 1 4 4 2829 6847 6761 86
+		3 1 5 4 2484 6847 5047 1800
+		4 1 15 4 4879 6847 648 6199
+		5 1 18 4 4034 6847 6285 562
+		6 1 26 4 1104 6847 1251 5596
+		7 1 30 4 1208 6847 4315 2532
+		8 1 31 4 1715 6847 7671 -824
+    9 1 38 4 4885 6847 4904 1943
+    10 1 47 4 3814 6847 1629 5218",
+    header = TRUE
+  )
+
+dat$fpc <- 50
+
+
 ```
 
-<!-- dat <- -->
-<!--   read.table( text = -->
-<!--                 "id str clu wt a b c d e -->
-<!-- 		1 1 1 4 4213 2867 28618 -24014 .25 -->
-<!-- 		2 1 4 4 706 2867 4896 -2029 .25 -->
-<!-- 		3 1 5 4 712 2867 3730 -863 .25 -->
-<!-- 		4 1 15 4 124 2867 556 2311 .25 -->
-<!-- 		5 1 18 4 178 2867 1463 1404 .25 -->
-<!-- 		6 1 26 4 313 2867 1946 921 .25 -->
-<!-- 		7 1 30 4 172 2867 834 2033 .25 -->
-<!-- 		8 1 31 4 291 2867 932 1935 .25 -->
-<!--     9 1 38 4 651 2867 1147 1720 .25 -->
-<!--     10 1 47 4 1206 2857 3089 -222 .25", -->
-<!--     header = TRUE -->
-<!--   ) -->
+```{r, eval=TRUE, echo=TRUE}
 
-<!-- dat$fpc <- 32 -->
+head(dat)
 
-<!-- my_design <- -->
-<!--   svydesign( -->
-<!--     id = ~clu, -->
-<!--     strata = ~str, -->
-<!--     data = dat, -->
-<!--     weights = ~wt, -->
-<!--     fpc = ~fpc -->
-<!--   ) -->
-<!-- my_glm <- svyglm(a ~ c, my_design) -->
-<!-- summary(my_glm) -->
+```
 
-<!-- pred.df <- data.frame(c = sum(dat$wt) * 2867) -->
-<!-- predict(my_glm, newdata = pred.df, total = sum(dat$wt)) -->
+We create the `survey` object and then fit a linear model.
 
-<!-- # Robust Regression -->
+```{r eval = TRUE, echo = FALSE}
+
+my_design <-
+  svydesign(
+    id = ~clu,
+    strata = ~str,
+    data = dat,
+    weights = ~wt,
+    fpc = ~fpc
+  )
+my_glm <- svyglm(a ~ d, my_design)
+summary(my_glm)
+
+```
+
+We see that a linear model do not fit the data well. We can also make predictions as follows, though here are not useful.
+
+```{r, echo=FALSE, eval=TRUE}
+pred.df <- data.frame(d = sum(dat$wt) * 6847)
+predict(my_glm, newdata = pred.df, total = sum(dat$wt))
+
+```
+
+Another problem I found intersting problem, one we were unable to derive a confident solution for, was an adverse sampling problem. We were given a single sample classified into two categories (A and B), extrapolated them, and were provided an additional sample. However, this new sample contained category B and C. Furthermore, this new sample contained observations provided in the first sample. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
+
+```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center'}
+  p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('A', 'B', 'C'), fill = c("blue", "red", "green"))
+```
+
+
+# Robust Regression
+
+The most useful statistical technique I learned this summer was Robust Regression. Aside from general learning of the computing environment and AVM code, I was tasked with learning this technique quickly and learning it well. Summit's library was an important resource for me and my favorite text was Anderson's *Modern Method's For Robust Regression*. 
 
 <!-- # Spatial Lag Regression -->
 
