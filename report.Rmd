@@ -15,6 +15,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, include = FALSE}
 library(VennDiagram)
 library(survey)
+library(MASS)
+library(tidyverse)
+
+set.seed(11271992)
 
 ```
 # Summit Consulting
@@ -144,21 +148,51 @@ Robust regression is an iterative procedure and is an excellent alternative to o
 
 There are several methods of estimation in Robust Regression and all have their advantages and disadvantages according to appropriate definitions. A breakdown point is the largest fraction of data that an estimator can tolerate without producing arbitrary results. That is the amount of data that can be given arbitrary values without affecting the estimator. Estimating procedures have influence functions that measure the influence observations have on the assumed distribution. Note that unbounded influence functions are undesirable as that implies there is no limit on the affect of an observation. Lastly, we care about asymptotically efficient estimators, though that is out of the scope of this report.
 
-Common estimating procedures are M and S estimation. M estimation, similar to OLS, minimizes a function of the residuals. S estimation minimizes the dispersion of the residuals. MM estimation is a combination of M and S estimation, it has the combination of high breakdown point, bounded influence function, and is slightly less asymptotically efficient than OLS. Two MM estimation procedures are Hubert and Tukey's Biweight. Their weighting functions are compared in the Figure 2. 
+Common estimating procedures are M and S estimation. M estimation, similar to OLS, minimizes a function of the residuals. S estimation minimizes the dispersion of the residuals. MM estimation is a combination of M and S estimation, it has the combination of high breakdown point, bounded influence function, and is slightly less asymptotically efficient than OLS. Two MM estimation procedures are Huber and Tukey's Biweight. Their weighting functions are compared in the Figure 2. 
 
-```{r, echo = FALSE, fig.align='center', fig.cap='Weighting functions for Huber and  Tukey estimation procedures.', fig.width=4, fig.height=4}
+```{r, echo = FALSE, fig.align='center', fig.cap='Weighting functions for Huber and  Tukey estimation procedures.', fig.width=4, fig.height=3.5}
 
-# knitr::include_graphics("Weight.png")
+
+raw <- tibble(x = seq(-10, 10, by = 0.01))
+raw <- raw %>% 
+  mutate(h = ifelse(abs(x) <= 1.345, 1, 1.345/abs(x))) %>% 
+  mutate(b = ifelse(abs(x) <= 4.685, (1-(x/4.685)^2)^2, 0)) 
+
+
+ggplot(raw) +
+  geom_line(aes(x, h, color = 'Huber')) +
+  geom_line(aes(x, b, color = 'Tukey')) +
+  scale_color_manual(values = c('red', 'blue')) +
+  ylab('Weight') +
+  xlab(expression(u))
 
 ```
 
-Note that Tukey's Biweight only gives full weight to observations with zero residual, that is observations directly on the regression line. It then down-weights observations more severely than the Hubert criteria. Note that Hubert estimation gives observations *near* the regression line full weight and only gives zero weight asymptotically. Figure 3 provides an example of robust vs OLS regression fits.
+Note that Tukey's Biweight only gives full weight to observations with zero residual, that is observations directly on the regression line. It then down-weights observations more severely than the Huber criteria. Note that Huber estimation gives observations *near* the regression line full weight and only gives zero weight asymptotically. Figure 3 provides an example of robust vs OLS regression fits.
 
-```{r, echo = FALSE, fig.align='center', fig.cap='Robust versus ordinary least squares regression lines with two iterations.', fig.width=3, fig.height=3}
+```{r, echo = FALSE, fig.align='center', fig.cap='Robust versus ordinary least squares regression lines with two iterations.', fig.width=4, fig.height=3}
 
-# knitr::include_graphics("rlm_ols.png")
+x <- seq(0, 10, by = 0.1)
+e <- rnorm(length(x), 0, 1)
+y <- -1 * runif(1, -1, 1) + x + e
+raw <- data.frame(x = x, y = y)
+outlier <- data.frame(x = runif(5, 7, 12), y = runif(5, -2, 2))
+raw <- rbind.data.frame(raw, outlier)
 
+ggplot(data = raw) +
+  geom_point(aes(x, y)) +
+  stat_smooth(aes(x, y, color = 'OLS'), method = 'lm', se = FALSE) +
+  stat_smooth(aes(x, y, color = 'RLM'), method = 'rlm', se = FALSE) +
+  scale_color_manual(values = c('red', 'blue')) +
+  theme_bw() +
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+  
 ```
+
+\newpage
 
 The robust regression procedure is summarized as follows:
 
@@ -167,7 +201,7 @@ The robust regression procedure is summarized as follows:
 \item Calculate residuals $e_{i}$
 \item Calculate $\hat{\sigma}_{i} = 1.4286 \times MAD$
 \item Calculate $u_i = \frac{e_i}{\hat{\sigma}_i}$
-\item Calculate $w_i$ using $u_i$ according to Tukey or Hubert
+\item Calculate $w_i$ using $u_i$ according to Tukey or Huber
 \item Calculate $\hat{\beta}^b$ suing WLS with $w_i$
 \item Repeat until convergence
 \end{enumerate}
