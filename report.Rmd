@@ -2,7 +2,7 @@
 title: "STAT5574 Report"
 author: "Alexander Durbin"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: pdf_document
+output: html_document
 geometry: margin = 1in
 fontsize: 12pt
 abstract: "This paper is the capstone requirement for STAT5574 and documents my experience as an intern at Summit Consulting. It includes history and background of the company, my role and daily responsibilites, as well as the statistcal and technical knowledge I've gained from this experience. The reader recognizes that a non-disclosure agreement was required for this internship."
@@ -41,7 +41,7 @@ My initial responsiblities as a member of the AVM team were learning the AWS inf
 
 After experimenting with AWS and becoming comfortable with the environment, I started to learn Summit's AVM and it was very intimidating at first. I thought myself proefficient in `R` before starting at Summit, but was not prepared for this level of software development. The AVM was a multi-step procedure, split across multiple files, used `S4` objects, and required the use of many packages I was unfamiliar with. It can be summarized as follows:
 
-```{r, eval = FALSE, fig.align="center"}
+```{r, eval = FALSE}
 1 Load subjects
 2 Clean subjects 
 3 Apply conversion dictionary
@@ -131,14 +131,28 @@ predict(my_glm, newdata = pred.df, total = sum(dat$wt))
 
 Another problem I found intersting problem, one we were unable to derive a confident solution for, was an adverse sampling problem. We were given a single sample classified into two categories (A and B), extrapolated them, and were provided an additional sample. However, this new sample contained category B and C. Furthermore, this new sample contained observations provided in the first sample. This made valid extrapolation difficult. This problem is best visualized with a Venn-diagram.
 
-```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center'}
+```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center', fig.cap="Venn diagram for adverse sampling problem."}
   p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('A', 'B', 'C'), fill = c("blue", "red", "green"))
 ```
 
 
 # Robust Regression
 
-The most useful statistical technique I learned this summer was Robust Regression. Aside from general learning of the computing environment and AVM code, I was tasked with learning this technique quickly and learning it well. Summit's library was an important resource for me and my favorite text was Anderson's *Modern Method's For Robust Regression*. 
+The most useful statistical technique I learned this summer was Robust Regression. Aside from general learning of the computing environment and AVM code, I was tasked with learning this technique quickly and learning it well. Summit's library was an important resource and my favorite text was Anderson's *Modern Method's For Robust Regression*. Almost every dataset I worked with at Summit had several high-leverage observations. Outlier removal was not an option for our work and would be quickly noted by the opposition.
+
+Robust regression is an excellent alternative to ordinary least squares when there are high-leverage observations or there is heteroscedasticity in the residuals. OLS regression is easily influenced by outliers and in the presence of non-constant variance can produce misleading results and incorrect inference. Compared to weighted least squares, robust regression uses an appropriate weighting function to down-weight observations depending on how large their residual is versus weighting an observation proportional to their inverse variance. Weighting observations in this fashion appropriately decreases their influence on the regression line.
+
+There are several methods of estimation in Robust Regression and all have their advantages and disadvantages according to appropriate definitions. A breakdown point is the largest fraction of data that an estimator can tolerate without producing arbitrary results. That is the amount of data that can be given arbitrary values without affecting the estimator. Estimating procedures have influence functions that measure the influence observations have on the assumed distribution. Note that unbounded influence functions are undesirable as that implies there is no limit on the affect of an observation. Lastly, we care about asymptotically efficient estimators, though that is out of the scope of this report.
+
+Common estimating procedures are M and S estimation. M estimation, similar to OLS, minimizes a function of the residuals. S estimation minimizes the dispersion of the residuals. MM estimation is a combination of M and S estimation, it has the combination of high breakdown point, bounded influence function, and is slightly less asymptotically efficient than OLS. Two MM estimation procedures are Hubert and Tukey's Biweight. Their weighting functions are compared in the Figure 2. 
+
+```{r, echo = FALSE, fig.align='center', fig.cap='Weighting functions for Huber and  Tukey estimation procedures.', fig.width=5, fig.height=4}
+
+knitr::include_graphics("Weight.png")
+
+```
+
+Note that Tukey's Biweight only gives full weight to observations with zero residual, that is observations directly on the regression line. It then down-weights observations more severely than the Hubert criteria. Note that Hubert estimation gives observations *near* the regression line full weight.
 
 <!-- # Spatial Lag Regression -->
 
