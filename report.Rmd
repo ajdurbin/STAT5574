@@ -112,7 +112,7 @@ head(dat)
 
 We create the `survey` object and then fit a linear model.
 
-```{r eval = TRUE, echo = FALSE}
+```{r, eval = TRUE, echo = FALSE}
 
 my_design <-
   svydesign(
@@ -222,6 +222,27 @@ At Summit I also had the opportunity to learn spatial statistics concepts and ho
 
 In addition to new statistical techniques, I learned many new `R` packages in combination with the previously mentioned AWS computing environment and several software developing best practices. Many of the best practices I learned were easily integrated into the AWS infrastructure and provided a computing environment condusive to statistical collaboration. It is worth mentioning again how useful CodeCommit was in our daily work. It provided the ability for several team members to work simultaneously on different components of the AVM while unaffecting the current working software. After extensive testing, the modified pieces are then merged together to form the latest version. This method of implimenting new features provides few drawbacks with the ability to rollback to a previous version. The ability to rollback has proven useful in the past when the opposition requests a new run of the AVM where the outputs must match exactly. I have since adopted version control into my programming environment.
 
-Another simple best practice was file structure and hierarchy.
+Another simple best practice was file structure and hierarchy. A common example of this structure is as follows:
+
+```{r, eval = FALSE}
+
+> system("tree ./Project -L 2", intern = TRUE)
+./Project
+|__ Data Input
+   |__ data.csv
+|__ Data Output
+   |__ Output - date.csv
+   |__ Summary - date.Rmd
+|__ Environment.R
+|__ Master Control.R
+|__ R Functions
+   |__ Functions.R
+|__ Rmd files
+   |__ summary-script.Rmd
+
+```
+
+Data, source code, and output were all separated for each project. The files `Environment.R` and `Master Control.R` are sourced through a `Bash` script and they appropraitely load all other functions. `Environment.R` sets the file paths for input, output, functions, and markdown scripts. It also provides discriptions of the analysis to be included in the markdown script later. Most importantly, it creates the nodes used for parallel computation using the `parallel` package in `R`.
+
 
 <!-- # Overall Experience -->
