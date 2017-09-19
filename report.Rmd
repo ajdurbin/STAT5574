@@ -194,7 +194,7 @@ ggplot(data = raw) +
   
 ```
 
-\newpage
+Robust regression was the most useful technique I learned at Summit. It was used for almost all analyses. Anderson's textbook was a fantastic resource that focused on the major concepts instead of the minor details. I assume that it will provide a solid foundation for the Regression Analysis course this fall.
 
 The robust regression procedure is summarized as follows:
 
@@ -216,6 +216,8 @@ At Summit I also had the opportunity to learn spatial statistics concepts and ho
 
 <!-- # Boosted Trees -->
 
-<!-- # Technical Skills -->
+# Technical Skills
+
+In addition to new statistical techniques, I learned many new `R` packages and computing environments. 
 
 <!-- # Overall Experience -->
