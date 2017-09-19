@@ -166,7 +166,8 @@ ggplot(raw) +
   geom_line(aes(x, b, color = 'Tukey')) +
   scale_color_manual(values = c('red', 'blue')) +
   ylab('Weight') +
-  xlab(expression(u))
+  xlab(expression(u)) +
+  theme(legend.title = element_blank())
 
 ```
 
@@ -190,7 +191,8 @@ ggplot(data = raw) +
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
-        axis.ticks.y=element_blank())
+        axis.ticks.y=element_blank(),
+        legend.title = element_blank())
   
 ```
 
@@ -218,6 +220,8 @@ At Summit I also had the opportunity to learn spatial statistics concepts and ho
 
 # Technical Skills
 
-In addition to new statistical techniques, I learned many new `R` packages and computing environments. 
+In addition to new statistical techniques, I learned many new `R` packages in combination with the previously mentioned AWS computing environment and several software developing best practices. Many of the best practices I learned were easily integrated into the AWS infrastructure and provided a computing environment condusive to statistical collaboration. It is worth mentioning again how useful CodeCommit was in our daily work. It provided the ability for several team members to work simultaneously on different components of the AVM while unaffecting the current working software. After extensive testing, the modified pieces are then merged together to form the latest version. This method of implimenting new features provides few drawbacks with the ability to rollback to a previous version. The ability to rollback has proven useful in the past when the opposition requests a new run of the AVM where the outputs must match exactly. I have since adopted version control into my programming environment.
+
+Another simple best practice was file structure and hierarchy.
 
 <!-- # Overall Experience -->
