@@ -234,6 +234,8 @@ Another simple best practice was file structure and hierarchy. A common example 
    |__ Output - date.csv
    |__ Summary - date.Rmd
 |__ Environment.R
+|__ Logs
+    |__ log.txt
 |__ Master Control.R
 |__ R Functions
    |__ Functions.R
@@ -242,7 +244,7 @@ Another simple best practice was file structure and hierarchy. A common example 
 
 ```
 
-Data, source code, and output were all separated for each project. The files `Environment.R` and `Master Control.R` are sourced through a `Bash` script and they appropraitely load all other functions. `Environment.R` sets the file paths for input, output, functions, and markdown scripts. It also provides discriptions of the analysis to be included in the markdown script later. Most importantly, it creates the nodes used for parallel computation using the `parallel` package in `R`.
+Data, source code, and output were all separated for each project. The files `Environment.R` and `Master Control.R` are sourced through a `Bash` script and they appropriately load all other functions. `Environment.R` sets the file paths for input, output, functions, logs, and markdown scripts. These files are then loaded into the environment. It also provides descriptions of the analyses to be included in the markdown script later. Most importantly, it creates the nodes used for parallel computation using the `parallel` package in `R`. `Master Control.R` is the main function for the program and provides the analyses using `Functions.R`. Upon completion it will write an output `.csv` file to `Data Output` and render an `R Markdown` document with appropriate summary statistics to `Data Output` as well. Parallel nodes are then destroyed, log files are closed, and an email is sent to the team leader that the program is complete. This structure was originally used for the AVM and has been adopted to all other programs at Summit. Although I don't need to write programs as complicated in my graduate work, I still try to use a similar structure now.
 
 
 <!-- # Overall Experience -->
