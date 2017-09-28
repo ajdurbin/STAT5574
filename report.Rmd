@@ -58,8 +58,6 @@ After experimenting with AWS and becoming comfortable with the environment, I st
 \item Cross-validate
 \end{enumerate}
 
-\newpage
-
 The AVM was designed to be run in parallel using nested functions and run on AWS. Using the `function foo(...)` elipsis feature in `R`, all AVM options and variables are able to be propogated down the nested functions. This was our main means of running sensitivities, cross-validation, switch from mean to median-based calculations, bootstrapping, or verbose output.
 
 As a member of the AVM team, I was required to understand the AVM completely, both for debugging purposes and in case an AVM team member was questioned during a deposition. While Dr. Lee had derived the statistical theory for the model, the AVM team were the ones responsible for its implimentation in `R` and need to be prepared in case they are required to appear in court. I took this opportunity and started a long-term project of internally documenting the AVM for Summit. I used Summit's custom `CSS` theme, `R Markdown`, and \LaTeX \ elements to create professional documentation. This documentation totalled over 90 pages and was as extensive as possible. It included a flow chart made with `TikZ` to best visualize the path a subject takes through the AVM with what information is added or removed from it after each function call. Also included are hardware requirements, uploading new subject and comparable data to AWS, nested function structure, comparison of log files, debugging procedures, and complete function descriptions with object types and return values. I was able to learn the AVM through the writing process and debugging. 
@@ -73,7 +71,6 @@ The average AVM workflow consisted of an often-failed first attempt of running n
 To further improve the litigation directorate's core competencies, Summit's Methodology Working Group meets weekly to discuss statistical techniques and methods that can be of benefit or harm to the opposition. MWG has monthly topcis of focus with meekly meetings. Each month begins with an introductory presentation of the topic by the group leader. Those with background in the particular topic then give five minute presentations on their experience, knowledge of pros and cons, and how Summit can utilize this technique. After resources such as packages, literature, or tutorials are discussed, each member of MWG is tasked with finding a possible project or solution that the topic may be applied to. The next two weeks consist of group presentations discussing the problem, solution, and results. The final monthly meeting is a Summit-wide presentation with the most successful solutions. Topics of interest included spatial statistics and machine learning. 
 
 MWG is also responsible for the Lit Throwdown competition. Litigation is split into two teams, plaintiff and defense, with the goal of reenacting a trial. Each team is further split into R&R, QC, and AVM, where it's required that each participant is not a member of their usual team. The teams are given a sample data set with the plaintiff's argument. It is then their responsibility to proivide expert service to their 'client', not only in statistical analyses, but also in legal recourse. The competition takes place over two weeks, with expert report due dates, rebuttle reports, and a mock trial with each group's expert witness and judged by Dr. Lee.
-
 
 # Deep Dives
 
@@ -140,7 +137,6 @@ Another problem I found intersting problem, one we were unable to derive a confi
 ```{r eval = TRUE, echo = FALSE, fig.width=6, fig.height=3.4, fig.align='center', fig.cap="Venn diagram for adverse sampling problem."}
   p <- draw.triple.venn(214, 198, 32, 43, 19, 0, 0, c('A', 'B', 'C'), fill = c("blue", "red", "green"))
 ```
-
 
 # Robust Regression
 
@@ -219,6 +215,8 @@ At Summit I also had the opportunity to learn spatial statistics concepts and ho
 Having econometric subject data and using a spatial procedure to find comparable properties, spatial autocorrelation is almost guaranteed in many of Summit's models. Spatial autocorrelation is the correlation of objects between space. We would expect that subjects and comparables very near each other would have spatial autocorrelation. This results in a collinearity issue in the model matrix, and so simple regression approaches are not valid. We check spatial autocorrelation with *Moran's I*. If no spatial autocorrelation is detected, we procede with simple regression techniques. Otherwise, we fit spatial lag models.
 
 Two common spatial regression techniques are spatial lag and spatal error models. Spatial lag assumes that the dependence is caused by the various levels of the dependent variables. We then fit $Y = \rho W Y + X\beta + \epsilon$. Here $\rho$ is the spatial autocorrelation coefficient and $W$ is the spatial weight matrix. This model solves the autocorrelation issue by accounting for the autocorrelation in its residuals. The spatial error model is of the form $Y=X\beta+\tilde{\epsilon}$, where $\tilde{\epsilon} = \rho W \epsilon + \omega$. This model is used for cases where the experimenter has misspecified components in the model, or that there are omitted spatially correlated variables. Note that if $\rho = 0$, both models reduce to the simply linear regression case. Both models account for spatial autocorrelation similarly, but their assumptions for the underlying autocorrelation are different.
+
+Fitting an OLS model to spatially autocorrelated data can have interseting side effects. In the spatial lag case, the estimates $\hat{\beta}$ may not converge and the $F$ statistic may not be statistically significant. For the spatial error case, the variance estimate $\hat{\sigma}$ will tend to underestimate the true variance. Both of these side effects are due to disregarding the spatial dependence either in the dependent variables or the error terms. 
  
 <!-- # Boosted Trees -->
 
@@ -253,7 +251,6 @@ Data, source code, and output were all separated for each project. The files `En
 `R Markdown` was previously mentioned in the documentation project and referenced in the above paragraph. Reproducable and scriptable documentation is a common part of all analyses performed at Summit and `R Markdown` is an integral part. It is an extremely efficient way to describe results that include figures without using a \LaTeX document and having to update your grahics each time. For example, multiple summary documents are generated at the complettion of each AVM run and there are built-in options to customize these documents further. I have since begun writing my code in `R Markdown` isntead of \LaTeX.
 
 I also became very proefficient with several `R` packages and functions. Because programs were run remotely and not through a GUI, we made extensive use of log files for scripts. Combined with the CodeCommit version control, we could easily compare the current run to the previous run to ensure there was no user error when configuring options for example. I also learned and made extensive use of the `apply` family of functions in combination with the `parallel` package. Having massive data, `for` loops were not an option for speed purposes. The `parallel` package has equivalent functions for each of the `apply` functions. As mentioned in the AVM description, we used a nested function structure that relied on the ellipsis feature in `R`. The ellipsis feature combined with the nested functions structure allowed us to only configure options in the topmost function in the hierarchy for the changes to be propogated down to the other functions. For general statistical programming I learned the 'tidyverse' family of functions. The two most famous packages included in `tidyverse` are `dplyr` and `ggplot`. I had previously used `ggplot` but became more familiar with a lot of its customization features. `dplyr` was new to me, but has become my favorite tool. It provides simple syntax and functions for manipulating dataframes. Furthermore, `tidyverse` also includes the `stringr` package for easier manipulation of strings. I made extensive use of these packages daily.
-
 
 # Overall Experience
 
